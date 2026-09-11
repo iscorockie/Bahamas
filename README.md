@@ -1,6 +1,6 @@
 # Bahamas Café · Restaurant · Lounge — Bukoto, Kampala
 
-Tailwind-powered single-page restaurant website + Node.js API backend, matching the original [BahamasCafe](https://iscorockie.github.io/BahamasCafe/) design system: sharp-cornered dark luxury (`#0A1512` greens) with gold `#C9A24B` / `#E3C579`, Cormorant Garamond + Big Shoulders Display + DM Sans.
+Tailwind-powered single-page restaurant website + Node.js API backend, matching the original [BahamasCafe](https://iscorockie.github.io/BahamasCafe/) design system: sharp-cornered dark luxury (`#0A1512` greens) with gold `#C9A24B` / `#E3C579`, Sora.
 
 ## Sections (in order)
 

@@ -115,7 +115,7 @@
       <div class="dish-img">${tag}<img loading="lazy" src="${esc(x.image)}" alt="${esc(x.name)}" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'"></div>
       <div class="p-[26px]">
         <div class="flex justify-between items-baseline gap-3 mb-2">
-          <h3 class="font-serif text-[26px] font-semibold text-white leading-none">${esc(x.name)}</h3>
+          <h3 class="font-sans text-[26px] font-semibold text-white leading-none">${esc(x.name)}</h3>
           <span class="font-sans text-[22px] text-gold-lt whitespace-nowrap">${price}</span>
         </div>
         <p class="text-sage text-sm mb-5 min-h-[44px]">${esc(x.description)}</p>
@@ -199,7 +199,7 @@
       <div class="grid grid-cols-[66px_1fr_auto] gap-3.5 py-4 border-b border-gold/10 [animation:fade-up_.3s_ease]">
         <img src="${esc(it.image)}" alt="" class="w-[66px] h-[66px] object-cover" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'">
         <div>
-          <h5 class="font-serif text-[19px] text-white leading-tight">${esc(it.name)}</h5>
+          <h5 class="font-sans text-[19px] text-white leading-tight">${esc(it.name)}</h5>
           <div class="text-gold-lt font-sans text-sm mt-0.5">${money(it.price)}</div>
           <div class="flex items-center gap-2.5 mt-[9px]">
             <button data-dec="${k}" aria-label="Decrease quantity" class="w-7 h-7 border border-gold/30 bg-transparent text-cream cursor-pointer transition hover:bg-gold hover:text-deep">−</button>
