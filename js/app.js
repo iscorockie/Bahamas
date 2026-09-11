@@ -116,7 +116,7 @@
       <div class="p-[26px]">
         <div class="flex justify-between items-baseline gap-3 mb-2">
           <h3 class="font-serif text-[26px] font-semibold text-white leading-none">${esc(x.name)}</h3>
-          <span class="font-display text-[22px] text-gold-lt whitespace-nowrap">${price}</span>
+          <span class="font-sans text-[22px] text-gold-lt whitespace-nowrap">${price}</span>
         </div>
         <p class="text-sage text-sm mb-5 min-h-[44px]">${esc(x.description)}</p>
         <button class="dish-add" data-add="${esc(x.id)}">
@@ -200,10 +200,10 @@
         <img src="${esc(it.image)}" alt="" class="w-[66px] h-[66px] object-cover" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'">
         <div>
           <h5 class="font-serif text-[19px] text-white leading-tight">${esc(it.name)}</h5>
-          <div class="text-gold-lt font-display text-sm mt-0.5">${money(it.price)}</div>
-          <div class="flex items-center gap-2.5 mt-2">
+          <div class="text-gold-lt font-sans text-sm mt-0.5">${money(it.price)}</div>
+          <div class="flex items-center gap-2.5 mt-[9px]">
             <button data-dec="${k}" aria-label="Decrease quantity" class="w-7 h-7 border border-gold/30 bg-transparent text-cream cursor-pointer transition hover:bg-gold hover:text-deep">−</button>
-            <span class="min-w-5 text-center font-display">${it.qty}</span>
+            <span class="min-w-5 text-center font-sans">${it.qty}</span>
             <button data-inc="${k}" aria-label="Increase quantity" class="w-7 h-7 border border-gold/30 bg-transparent text-cream cursor-pointer transition hover:bg-gold hover:text-deep">+</button>
           </div>
         </div>
