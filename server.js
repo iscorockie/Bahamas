@@ -43,6 +43,8 @@ CREATE TABLE IF NOT EXISTS menu_items (
   image TEXT DEFAULT '',
   badge TEXT DEFAULT '',
   popular INTEGER DEFAULT 0,
+  combo INTEGER DEFAULT 0,
+  from_price INTEGER DEFAULT 0,
   created_at TEXT DEFAULT (datetime('now'))
 );
 CREATE TABLE IF NOT EXISTS orders (
@@ -95,6 +97,24 @@ CREATE TABLE IF NOT EXISTS newsletter (
 );
 `);
 
+// ---------------------------------------------------------------- Light migrations
+// Older DBs lack combo/from_price — add + backfill idempotently.
+for (const [col, ddl] of [['combo', 'INTEGER DEFAULT 0'], ['from_price', 'INTEGER DEFAULT 0']]) {
+  const cols = db.prepare('PRAGMA table_info(menu_items)').all();
+  if (!cols.some((c) => c.name === col)) db.exec(`ALTER TABLE menu_items ADD COLUMN ${col} ${ddl}`);
+}
+function backfillFlags() {
+  try {
+    const items = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'menu.json'), 'utf8'));
+    const up = db.prepare('UPDATE menu_items SET combo = ?, from_price = ? WHERE id = ?');
+    withTransaction(() => {
+      for (const it of items) up.run(it.combo ? 1 : 0, it.from ? 1 : 0, it.id);
+    });
+  } catch (e) {
+    console.error('Flag backfill failed:', e.message);
+  }
+}
+
 // ---------------------------------------------------------------- Seed menu
 function withTransaction(fn) {
   db.exec('BEGIN');
@@ -115,17 +135,18 @@ function seedMenu(force = false) {
   if (!fs.existsSync(menuPath)) return { seeded: false, count, error: 'menu.json missing' };
   const items = JSON.parse(fs.readFileSync(menuPath, 'utf8'));
   const insert = db.prepare(
-    'INSERT OR REPLACE INTO menu_items (id, name, category, price, description, image, badge, popular) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+    'INSERT OR REPLACE INTO menu_items (id, name, category, price, description, image, badge, popular, combo, from_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
   );
   withTransaction(() => {
     for (const it of items) {
-      insert.run(it.id, it.name, it.category, it.price, it.description || '', it.image || '', it.badge || '', it.popular ? 1 : 0);
+      insert.run(it.id, it.name, it.category, it.price, it.description || '', it.image || '', it.badge || '', it.popular ? 1 : 0, it.combo ? 1 : 0, it.from ? 1 : 0);
     }
   });
   return { seeded: true, count: items.length };
 }
 
 const seedResult = seedResultSafe();
+backfillFlags();
 function seedResultSafe() {
   try {
     return seedMenu(process.argv.includes('--seed'));
@@ -177,6 +198,7 @@ function rateLimit({ windowMs = 60000, max = 60 } = {}) {
     const arr = (hits.get(k) || []).filter((t) => now - t < windowMs);
     arr.push(now);
     hits.set(k, arr);
+    if (hits.size > 5000) hits.clear(); // bound memory over long uptimes
     if (arr.length > max) return res.status(429).json({ ok: false, error: 'Too many requests, slow down.' });
     next();
   };
@@ -188,6 +210,13 @@ app.set('trust proxy', 1);
 app.use(cors());
 app.use(express.json({ limit: '256kb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// Minimal security headers
+app.use((_req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
 
 // Request log (tiny)
 app.use((req, _res, next) => {
@@ -248,22 +277,29 @@ app.post('/api/orders', rateLimit({ windowMs: 60000, max: 20 }), (req, res) => {
 
   const deliveryFee = orderType === 'delivery' ? (subtotal >= 60000 ? 0 : 5000) : 0;
   const total = subtotal + deliveryFee;
-  const reference = makeRef('BHM');
-
-  try {
-    const insertOrder = db.prepare(
-      'INSERT INTO orders (reference, customer_name, customer_phone, customer_address, order_type, notes, subtotal, delivery_fee, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-    );
-    const insertLine = db.prepare('INSERT INTO order_items (order_id, item_id, name, price, qty) VALUES (?, ?, ?, ?, ?)');
-    withTransaction(() => {
-      const r = insertOrder.run(reference, name, phone, address, orderType, String(notes || '').slice(0, 500), subtotal, deliveryFee, total);
-      for (const l of lines) insertLine.run(Number(r.lastInsertRowid), l.item_id, l.name, l.price, l.qty);
-    });
-    res.status(201).json({ ok: true, reference, subtotal, deliveryFee, total, orderType, itemCount: lines.reduce((a, l) => a + l.qty, 0) });
-  } catch (e) {
-    console.error('Order insert failed:', e.message);
-    res.status(500).json({ ok: false, error: 'Could not place order. Try again.' });
+  const insertOrder = db.prepare(
+    'INSERT INTO orders (reference, customer_name, customer_phone, customer_address, order_type, notes, subtotal, delivery_fee, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+  );
+  const insertLine = db.prepare('INSERT INTO order_items (order_id, item_id, name, price, qty) VALUES (?, ?, ?, ?, ?)');
+  let reference = '';
+  let ok = false;
+  for (let attempt = 0; attempt < 3 && !ok; attempt++) {
+    reference = makeRef('BHM');
+    try {
+      withTransaction(() => {
+        const r = insertOrder.run(reference, name, phone, address, orderType, String(notes || '').slice(0, 500), subtotal, deliveryFee, total);
+        for (const l of lines) insertLine.run(Number(r.lastInsertRowid), l.item_id, l.name, l.price, l.qty);
+      });
+      ok = true;
+    } catch (e) {
+      if (!String(e && e.message).includes('UNIQUE')) {
+        console.error('Order insert failed:', e.message);
+        return res.status(500).json({ ok: false, error: 'Could not place order. Try again.' });
+      }
+    }
   }
+  if (!ok) return res.status(500).json({ ok: false, error: 'Could not place order. Try again.' });
+  res.status(201).json({ ok: true, reference, subtotal, deliveryFee, total, orderType, itemCount: lines.reduce((a, l) => a + l.qty, 0) });
 });
 
 app.get('/api/orders', adminAuth, (req, res) => {
@@ -308,25 +344,34 @@ app.post('/api/reservations', rateLimit({ windowMs: 60000, max: 15 }), (req, res
   const dup = db.prepare('SELECT reference FROM reservations WHERE mobile = ? AND date = ? AND time = ?').get(String(mobile).trim(), date, String(time).trim());
   if (dup) return res.status(409).json({ ok: false, error: 'You already have a reservation at this date & time.', reference: dup.reference });
 
-  const reference = makeRef('RSV');
-  try {
-    db.prepare(
-      'INSERT INTO reservations (reference, name, email, mobile, date, time, persons, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-    ).run(
-      reference,
-      String(name).trim(),
-      String(email || '').trim(),
-      String(mobile).trim(),
-      date,
-      String(time).trim(),
-      String(persons).trim(),
-      String(notes || '').slice(0, 500)
-    );
-    res.status(201).json({ ok: true, reference, message: 'Table reserved! We will call to confirm.' });
-  } catch (e) {
-    console.error('Reservation insert failed:', e.message);
-    res.status(500).json({ ok: false, error: 'Could not save reservation. Try again.' });
+  const insertRes = db.prepare(
+    'INSERT INTO reservations (reference, name, email, mobile, date, time, persons, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+  );
+  const resArgs = [
+    String(name).trim(),
+    String(email || '').trim(),
+    String(mobile).trim(),
+    date,
+    String(time).trim(),
+    String(persons).trim(),
+    String(notes || '').slice(0, 500),
+  ];
+  let reference = '';
+  let ok = false;
+  for (let attempt = 0; attempt < 3 && !ok; attempt++) {
+    reference = makeRef('RSV');
+    try {
+      insertRes.run(reference, ...resArgs);
+      ok = true;
+    } catch (e) {
+      if (!String(e && e.message).includes('UNIQUE')) {
+        console.error('Reservation insert failed:', e.message);
+        return res.status(500).json({ ok: false, error: 'Could not save reservation. Try again.' });
+      }
+    }
   }
+  if (!ok) return res.status(500).json({ ok: false, error: 'Could not save reservation. Try again.' });
+  res.status(201).json({ ok: true, reference, message: 'Table reserved! We will call to confirm.' });
 });
 
 app.get('/api/reservations', adminAuth, (req, res) => {
@@ -376,10 +421,14 @@ app.get('/api/stats', adminAuth, (_req, res) => {
 });
 
 // ---------------- Static front-end ----------------
-app.use(express.static(path.join(__dirname), { extensions: ['html'], maxAge: '1h' }));
-
-// SPA-ish fallback for known pages
-app.get('/admin', (_req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+// NOTE: only public assets are mounted — never the repo root, which would
+// expose server.js, node_modules and the SQLite DB holding customer data.
+app.get(['/', '/index.html'], (_req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get(['/admin', '/admin.html'], (_req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+app.use('/css', express.static(path.join(__dirname, 'css'), { maxAge: '1h' }));
+app.use('/js', express.static(path.join(__dirname, 'js'), { maxAge: '1h' }));
+app.get('/data/menu.json', (_req, res) => res.sendFile(path.join(DATA_DIR, 'menu.json')));
+app.use('/data', (_req, res) => res.status(404).json({ ok: false, error: 'Not found' }));
 
 app.use('/api', (_req, res) => res.status(404).json({ ok: false, error: 'Unknown API endpoint' }));
 

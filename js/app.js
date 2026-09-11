@@ -103,8 +103,8 @@
       description: m.description || '',
       image: m.image || FALLBACK_IMG,
       badge: m.badge || '',
-      combo: !!(m.combo || (/combo/i.test(m.badge || ''))),
-      from: !!m.from,
+      combo: !!(m.combo || /combo/i.test(m.badge || '')),
+      from: !!(m.from || m.from_price),
     };
   }
 
@@ -280,10 +280,12 @@
 
     cart = [];
     save();
-    renderCart();
+    renderCart(); // owns the disabled state (stays disabled on empty cart)
+    $('#oName').value = '';
+    $('#oPhone').value = '';
+    $('#oLoc').value = '';
     toggleCart(false);
     toast(ref ? `Order ${ref} sent!` : 'Order sent via WhatsApp!');
-    btn.disabled = false;
   });
 
   /* ---------------- Reservation: API-first, WhatsApp fallback ---------------- */
