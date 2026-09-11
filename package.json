@@ -1,0 +1,25 @@
+{
+  "name": "bahamas-cafe-restaurant",
+  "version": "2.0.0",
+  "description": "Bahamas Café · Restaurant · Lounge — Bukoto, Kampala. Tailwind single-page site + Node.js API backend.",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/input.css -o ./css/output.css --minify",
+    "watch:css": "tailwindcss -i ./css/input.css -o ./css/output.css --watch",
+    "start": "npm run build:css && node server.js",
+    "dev": "npm run build:css && node --watch server.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.12",
+    "tailwindcss": "^4.1.12"
+  },
+  "license": "MIT"
+}

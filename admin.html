@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bahamas Admin — Orders & Reservations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0b1411; --card:#121f1a; --gold:#c9a227; --gold2:#e6c455; --cream:#f3ecda; --muted:#a9b3ab; --line:rgba(255,255,255,.09); }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Sora',sans-serif; background:var(--bg); color:var(--cream); padding:32px 20px 60px; }
+    .wrap { max-width:1100px; margin:0 auto; }
+    h1 { font-family:'Sora',sans-serif; font-size:34px; }
+    h1 em { color:var(--gold2); }
+    .sub { color:var(--muted); font-weight:300; margin:6px 0 24px; }
+    .keybar { display:flex; gap:10px; margin-bottom:26px; flex-wrap:wrap; }
+    .keybar input { flex:1; min-width:220px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14); border-radius:10px; color:#fff; padding:12px 16px; font-size:14px; font-family:inherit; }
+    .btn { background:linear-gradient(135deg,#d9b13b,#a8841c); color:#14100a; border:0; border-radius:10px; padding:12px 26px; font-family:inherit; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; font-weight:500; }
+    .btn.ghost { background:none; border:1px solid rgba(255,255,255,.2); color:#fff; }
+    .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:28px; }
+    .stat { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; }
+    .stat small { color:var(--muted); letter-spacing:2px; text-transform:uppercase; font-size:11px; }
+    .stat b { display:block; font-size:28px; color:var(--gold2); margin-top:6px; font-weight:500; }
+    .tabs { display:flex; gap:10px; margin-bottom:20px; }
+    .tab { border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.03); color:#cfd5cc; padding:11px 26px; border-radius:100px; cursor:pointer; font-family:inherit; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; }
+    .tab.active { background:var(--gold); color:#14100a; border-color:transparent; font-weight:500; }
+    table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; font-size:14px; }
+    th, td { padding:13px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold2); font-weight:500; }
+    tr:last-child td { border-bottom:0; }
+    .pill { display:inline-block; padding:3px 12px; border-radius:100px; font-size:12px; border:1px solid rgba(255,255,255,.18); }
+    .pill.pending { color:#e6c455; border-color:rgba(201,162,39,.5); }
+    .pill.confirmed, .pill.ready { color:#7ee2a8; border-color:rgba(126,226,168,.4); }
+    .pill.preparing, .pill.seated { color:#7ec8e2; border-color:rgba(126,200,226,.4); }
+    .pill.delivered, .pill.completed { color:#9aa39b; }
+    .pill.cancelled { color:#e0685c; border-color:rgba(224,104,92,.4); }
+    select { background:#0e1a15; color:#fff; border:1px solid rgba(255,255,255,.16); border-radius:8px; padding:7px 10px; font-family:inherit; font-size:13px; }
+    .lines { font-size:12.5px; color:var(--muted); margin-top:6px; }
+    .empty { padding:40px; text-align:center; color:var(--muted); }
+    a.back { color:var(--gold2); text-decoration:none; font-size:14px; }
+    @media(max-width:700px){ table, thead, tbody, th, td, tr { display:block; } thead { display:none; } tr { border-bottom:2px solid rgba(255,255,255,.1); padding:8px 0; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="/">← Back to site</a>
+    <h1>Bahamas <em>Admin</em></h1>
+    <p class="sub">Orders & reservations dashboard. Enter your admin key to load data.</p>
+    <div class="keybar">
+      <input type="password" id="key" placeholder="Admin key (default: bahamas-admin-2026)">
+      <button class="btn" id="load">Load Data</button>
+      <button class="btn ghost" id="refresh">↻ Refresh</button>
+    </div>
+    <div class="stats" id="stats" style="display:none">
+      <div class="stat"><small>Revenue (all)</small><b id="stRev">—</b></div>
+      <div class="stat"><small>Orders today</small><b id="stToday">—</b></div>
+      <div class="stat"><small>Pending orders</small><b id="stPend">—</b></div>
+      <div class="stat"><small>Reservations</small><b id="stRes">—</b></div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="orders">Orders</button>
+      <button class="tab" data-tab="reservations">Reservations</button>
+    </div>
+    <div id="content"><div class="empty">Enter admin key and press “Load Data”.</div></div>
+  </div>
+  <script>
+    const $ = (s) => document.querySelector(s);
+    let tab = 'orders';
+    let KEY = localStorage.getItem('bahamas_admin_key') || '';
+    $('#key').value = KEY;
+    document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach((x) => x.classList.remove('active'));
+      t.classList.add('active');
+      tab = t.dataset.tab;
+      if (KEY) load();
+    }));
+    $('#load').addEventListener('click', () => { KEY = $('#key').value.trim(); localStorage.setItem('bahamas_admin_key', KEY); load(); });
+    $('#refresh').addEventListener('click', () => KEY && load());
+    const UGX = (n) => 'UGX ' + Number(n || 0).toLocaleString('en-UG');
+
+    async function load() {
+      $('#content').innerHTML = '<div class="empty">Loading…</div>';
+      try {
+        const [stats, list] = await Promise.all([
+          fetch('/api/stats?key=' + encodeURIComponent(KEY)).then((r) => r.json()),
+          fetch(`/api/${tab}?key=` + encodeURIComponent(KEY)).then((r) => r.json()),
+        ]);
+        if (!stats.ok) throw new Error(stats.error || 'Unauthorized');
+        $('#stats').style.display = '';
+        $('#stRev').textContent = UGX(stats.revenue);
+        $('#stToday').textContent = stats.todayOrders;
+        $('#stPend').textContent = (stats.orders.find((o) => o.status === 'pending') || {}).c || 0;
+        $('#stRes').textContent = stats.reservations.reduce((a, r) => a + r.c, 0);
+        render(list);
+      } catch (e) {
+        $('#content').innerHTML = `<div class="empty">⚠️ ${e.message}. Check the admin key / is the server running?</div>`;
+      }
+    }
+
+    function render(data) {
+      if (tab === 'orders') {
+        if (!data.orders.length) return ($('#content').innerHTML = '<div class="empty">No orders yet.</div>');
+        $('#content').innerHTML = `<table><thead><tr><th>Ref</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody>` +
+          data.orders.map((o) => `<tr>
+            <td><b>${o.reference}</b><br><small style="color:#7d877f">${o.order_type} · ${o.created_at}</small></td>
+            <td>${esc(o.customer_name)}<br><small style="color:#7d877f">${esc(o.customer_phone)} ${esc(o.customer_address || '')}</small></td>
+            <td>${o.lines.map((l) => `${esc(l.name)} ×${l.qty}`).join('<br>')}</td>
+            <td><b style="color:var(--gold2)">${UGX(o.total)}</b></td>
+            <td><span class="pill ${o.status}">${o.status}</span><br><br>
+              <select data-ref="${o.reference}">${['pending', 'confirmed', 'preparing', 'ready', 'delivered', 'cancelled'].map((s) => `<option ${s === o.status ? 'selected' : ''}>${s}</option>`).join('')}</select></td>
+          </tr>`).join('') + `</tbody></table>`;
+      } else {
+        if (!data.reservations.length) return ($('#content').innerHTML = '<div class="empty">No reservations yet.</div>');
+        $('#content').innerHTML = `<table><thead><tr><th>Ref</th><th>Guest</th><th>Slot</th><th>Status</th></tr></thead><tbody>` +
+          data.reservations.map((r) => `<tr>
+            <td><b>${r.reference}</b><br><small style="color:#7d877f">${r.created_at}</small></td>
+            <td>${esc(r.name)}<br><small style="color:#7d877f">${esc(r.mobile)} · ${esc(r.email || '')}</small></td>
+            <td>${esc(r.date)} · ${esc(r.time)}<br><small>${esc(r.persons)}</small>${r.notes ? `<div class="lines">${esc(r.notes)}</div>` : ''}</td>
+            <td><span class="pill ${r.status}">${r.status}</span><br><br>
+              <select data-ref="${r.reference}">${['pending', 'confirmed', 'seated', 'completed', 'cancelled'].map((s) => `<option ${s === r.status ? 'selected' : ''}>${s}</option>`).join('')}</select></td>
+          </tr>`).join('') + `</tbody></table>`;
+      }
+      document.querySelectorAll('select[data-ref]').forEach((sel) => sel.addEventListener('change', async () => {
+        const endpoint = tab === 'orders' ? 'orders' : 'reservations';
+        const res = await fetch(`/api/${endpoint}/${sel.dataset.ref}?key=` + encodeURIComponent(KEY), {
+          method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: sel.value }),
+        });
+        const d = await res.json();
+        if (!d.ok) alert(d.error || 'Update failed');
+        load();
+      }));
+    }
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+    if (KEY) load();
+  </script>
+</body>
+</html>
