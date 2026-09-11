@@ -1,416 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bahamas Cafe, Restaurant &amp; Lounge — Menu | Bukoto, Kampala</title>
-<meta name="description" content="Bahamas Cafe, Restaurant & Lounge — Grilled pork, chicken, kikalayi, rolex, soups & combo meals. Opposite Bukoto Heights Apartments, Kampala. Delivery: +256 762 831 177">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Great+Vibes&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-<style>
-:root{
-  --orange:#e8720c;
-  --orange-2:#f79021;
-  --dark:#151515;
-  --dark-2:#1e1e1e;
-  --cream:#f6f1e9;
-  --line:rgba(255,255,255,.15);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--dark);
-  color:#fff;
-  -webkit-font-smoothing:antialiased;
-}
-img{max-width:100%;display:block}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-
-/* ---------- PATTERN ---------- */
-.pattern{
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.05) 1px, transparent 1px),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size:34px 34px, 48px 48px;
-}
-
-/* ---------- NAV ---------- */
-header{
-  position:sticky;top:0;z-index:100;
-  background:rgba(15,15,15,.92);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
-}
-.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-.mark{
-  width:44px;height:44px;border-radius:50%;
-  border:2px solid var(--orange);
-  display:grid;place-items:center;
-  font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--orange);
-  letter-spacing:1px;
-}
-.brand b{font-family:'Great Vibes',cursive;font-size:26px;font-weight:400;color:#fff;line-height:1}
-.brand span{display:block;font-size:9px;letter-spacing:3.5px;color:#bbb;text-transform:uppercase}
-nav ul{display:flex;gap:26px;list-style:none}
-nav a{color:#ddd;text-decoration:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;transition:.25s}
-nav a:hover{color:var(--orange-2)}
-.call{
-  background:var(--orange);color:#fff;text-decoration:none;
-  padding:11px 20px;border-radius:40px;font-weight:700;font-size:13px;
-  white-space:nowrap;transition:.25s;
-}
-.call:hover{background:#fff;color:var(--orange)}
-.burger{display:none;background:none;border:0;color:#fff;font-size:26px;cursor:pointer}
-
-/* ---------- HERO ---------- */
-.hero{
-  position:relative;min-height:88vh;display:grid;place-items:center;text-align:center;
-  background:linear-gradient(rgba(10,10,10,.72),rgba(10,10,10,.85)),
-             url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=80') center/cover fixed;
-  padding:90px 0;
-}
-.hero h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(64px,15vw,180px);
-  letter-spacing:14px;line-height:.9;
-  color:transparent;-webkit-text-stroke:2px #fff;
-}
-.hero .script{font-family:'Great Vibes',cursive;font-size:clamp(34px,6vw,58px);color:var(--orange-2);margin-bottom:-6px}
-.hero p.tag{margin:22px auto 0;max-width:620px;color:#cfcfcf;font-weight:300;font-size:17px;line-height:1.7}
-.hero .loc{
-  display:inline-block;margin-top:30px;background:var(--orange);
-  padding:14px 26px;border-radius:6px;font-size:14px;font-weight:600;letter-spacing:.5px;
-}
-.hero .loc a{color:#fff;text-decoration:none}
-.btns{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.btn{
-  padding:15px 34px;border-radius:40px;text-decoration:none;font-weight:700;
-  font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:.25s;
-}
-.btn-p{background:var(--orange);color:#fff}
-.btn-p:hover{background:#fff;color:var(--orange)}
-.btn-s{border:2px solid #fff;color:#fff}
-.btn-s:hover{background:#fff;color:var(--dark)}
-
-/* ---------- SECTION HEAD ---------- */
-.sec{padding:80px 0}
-.sec-bar{
-  display:flex;align-items:center;gap:18px;
-  background:var(--dark-2);border-radius:10px;padding:18px 26px;margin-bottom:38px;
-  border-left:6px solid var(--orange);
-}
-.sec-bar .mark{width:52px;height:52px;flex:none;font-size:22px}
-.sec-bar h2{
-  font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,5vw,48px);
-  letter-spacing:4px;line-height:1;
-}
-.sec-bar h2 em{color:var(--orange);font-style:normal}
-
-/* ---------- GRID ---------- */
-.cols{display:grid;grid-template-columns:1.25fr 1fr;gap:26px;align-items:start}
-
-.card-list{background:var(--cream);color:#1b1b1b;border-radius:12px;padding:12px 26px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
-.item{display:flex;gap:16px;align-items:center;padding:20px 0;border-bottom:1px dashed #d8cfc0}
-.item:last-child{border-bottom:0}
-.item .txt{flex:1}
-.item h3{font-size:20px;font-weight:800;letter-spacing:.2px}
-.item p{font-size:13.5px;color:#5c5c5c;margin:5px 0 8px;line-height:1.5;font-weight:300}
-.price{font-weight:800;color:var(--orange);font-size:16px;letter-spacing:.5px}
-.thumb{
-  width:92px;height:92px;border-radius:50%;flex:none;object-fit:cover;
-  border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.25);
-}
-
-.combo{
-  background:linear-gradient(160deg,var(--orange-2),var(--orange) 55%,#c85c04);
-  border-radius:12px;padding:26px;box-shadow:0 18px 40px rgba(0,0,0,.35);
-  position:relative;overflow:hidden;
-}
-.combo:after{
-  content:"";position:absolute;right:-40px;bottom:-40px;width:170px;height:170px;
-  border-radius:50%;border:14px solid rgba(255,255,255,.12);
-}
-.combo h3.ct{font-family:'Great Vibes',cursive;font-size:40px;font-weight:400;line-height:1}
-.combo h3.ct small{
-  font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;margin-left:8px;
-}
-.combo hr{border:0;border-top:2px solid rgba(255,255,255,.35);margin:16px 0}
-.citem{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.25);position:relative;z-index:2}
-.citem:last-child{border-bottom:0}
-.citem h4{font-size:16.5px;font-weight:800}
-.citem p{font-size:12.5px;opacity:.92;font-weight:300;margin:3px 0 5px}
-.citem .price{color:#fff;font-size:15px}
-
-.strip{
-  margin-top:26px;background:var(--dark-2);border:1px solid var(--line);
-  border-radius:10px;text-align:center;padding:16px;font-weight:700;letter-spacing:1px;
-}
-.strip a{color:var(--orange-2);text-decoration:none}
-
-/* ---------- INFO ---------- */
-.info{background:var(--dark-2)}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
-.box{background:#242424;border-radius:12px;padding:28px;border-top:4px solid var(--orange)}
-.box h4{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;margin-bottom:10px}
-.box p,.box a{color:#bdbdbd;font-size:14.5px;line-height:1.8;font-weight:300;text-decoration:none}
-.box a:hover{color:var(--orange-2)}
-
-/* ---------- CTA ---------- */
-.cta{
-  text-align:center;padding:90px 20px;
-  background:linear-gradient(rgba(20,10,0,.8),rgba(20,10,0,.85)),
-  url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1600&q=80') center/cover;
-}
-.cta h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,7vw,64px);letter-spacing:4px}
-.cta p{color:#ddd;margin:14px 0 28px;font-weight:300}
-
-footer{background:#0d0d0d;padding:34px 20px;text-align:center;color:#8a8a8a;font-size:13px}
-footer b{color:#fff}
-
-@media(max-width:880px){
-  .cols{grid-template-columns:1fr}
-  nav ul{
-    display:none;position:absolute;top:74px;left:0;right:0;
-    background:#141414;flex-direction:column;gap:0;padding:10px 0;border-bottom:1px solid var(--line);
-  }
-  nav ul.open{display:flex}
-  nav ul li{padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
-  .burger{display:block}
-  .call{display:none}
-  .hero{background-attachment:scroll}
-  .thumb{width:74px;height:74px}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a1512">
+  <title>Bahamas · Cafe Restaurant Lounge · Bukoto Kampala</title>
+  <meta name="description" content="Bahamas Café, Restaurant & Lounge — flame-grilled pork, chicken, kikalayi, rolex & handcrafted drinks in Bukoto, Kampala. Reserve: +256 762 831 177.">
+  <meta property="og:title" content="Bahamas Café · Restaurant · Lounge — Taste The Difference">
+  <meta property="og:description" content="Flame-grilled perfection, island soul and a lounge experience — in the heart of Bukoto, Kampala.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230a1512'/><text x='50' y='72' font-size='60' text-anchor='middle' fill='%23c9a24b' font-family='Georgia' font-style='italic'>B</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Big+Shoulders+Display:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/output.css">
 </head>
-<body>
+<body class="bg-base text-cream font-sans antialiased">
 
-<header>
-  <div class="wrap nav">
-    <a href="#" class="brand">
-      <div class="mark">B</div>
-      <div><b>Bahamas</b><span>Cafe · Restaurant · Lounge</span></div>
-    </a>
-    <nav>
-      <ul id="menu">
-        <li><a href="#grill">Grill</a></li>
-        <li><a href="#chicken">Chicken</a></li>
-        <li><a href="#soups">Soups &amp; Quick</a></li>
-        <li><a href="#visit">Visit Us</a></li>
+  <!-- ================= HEADER ================= -->
+  <header id="hdr" class="fixed top-0 left-0 right-0 z-[1000]">
+    <div class="wrap hdr-bar flex items-center justify-between gap-6">
+      <a href="#home" class="flex items-center gap-3.5" aria-label="Bahamas home">
+        <span>
+          <span class="block font-serif text-[34px] font-medium tracking-[1px] leading-[.75] text-white">Bahamas</span>
+          <span class="block font-display text-[9px] tracking-[4px] text-gold mt-1.5">CAFE · RESTAURANT · LOUNGE</span>
+        </span>
+      </a>
+      <ul id="nav" class="flex gap-[34px] list-none max-[920px]:hidden">
+        <li><a class="nav-link active" href="#home">Home</a></li>
+        <li><a class="nav-link" href="#about">About</a></li>
+        <li><a class="nav-link" href="#menu">Menu</a></li>
+        <li><a class="nav-link" href="#reserve">Reservation</a></li>
+        <li><a class="nav-link" href="#contact">Contact</a></li>
       </ul>
-    </nav>
-    <a class="call" href="tel:+256762831177">📞 +256 762 831 177</a>
-    <button class="burger" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
-  </div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="wrap">
-    <div class="script">Bahamas</div>
-    <h1>MENU</h1>
-    <p class="tag">Flame‑grilled pork, crispy kikalayi, sizzling chicken and hearty local soups — served fresh, every day, in the heart of Bukoto.</p>
-    <div class="loc">📍 Opposite Bukoto Heights Apartments — Kampala (UG) &nbsp;|&nbsp; <a href="tel:+256762831177">+256 762 831 177</a></div>
-    <div class="btns">
-      <a href="#grill" class="btn btn-p">View Menu</a>
-      <a href="tel:+256762831177" class="btn btn-s">Order Delivery</a>
+      <div class="flex items-center gap-3.5">
+        <div class="flex gap-3.5 max-[920px]:hidden" aria-label="Social links">
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="text-cream opacity-70 transition hover:text-gold hover:opacity-100">
+            <svg class="w-[17px] h-[17px] fill-current" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0022 12z"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="text-cream opacity-70 transition hover:text-gold hover:opacity-100">
+            <svg class="w-[17px] h-[17px] fill-current" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.1 15.6 2.1 15.2 2.1 12s0-3.6.1-4.9C2.3 3.9 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1018.6 12 6.6 6.6 0 0012 5.4zm0 10.9A4.3 4.3 0 1116.3 12 4.3 4.3 0 0112 16.3zm6.8-11.1a1.5 1.5 0 11-1.5-1.5 1.5 1.5 0 011.5 1.5z"/></svg>
+          </a>
+          <a href="https://wa.me/256762831177" target="_blank" rel="noopener" aria-label="WhatsApp" class="text-cream opacity-70 transition hover:text-gold hover:opacity-100">
+            <svg class="w-[17px] h-[17px] fill-current" viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.5-.5-.5-.7-.5H7c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.2.2 2.1 3.2 5 4.5 2.9 1.2 2.9.8 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2z"/></svg>
+          </a>
+        </div>
+        <button id="cartBtn" aria-label="Open your order" class="relative grid place-items-center w-11 h-11 rounded-full border border-gold/40 text-cream cursor-pointer transition hover:bg-gold hover:text-deep hover:border-gold">
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></svg>
+          <span id="cc" class="absolute -top-1 -right-1 grid place-items-center min-w-[19px] h-[19px] px-1 rounded-full bg-gold text-deep font-display font-bold text-[10px]">0</span>
+        </button>
+        <button id="menuToggle" aria-label="Open menu" aria-expanded="false" class="hidden max-[920px]:block bg-transparent border-0 text-cream text-[26px] cursor-pointer leading-none">☰</button>
+      </div>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- GRILL -->
-<section class="sec pattern" id="grill">
-  <div class="wrap">
-    <div class="sec-bar">
-      <div class="mark">B</div>
-      <h2><em>GRILL</em> – MENU</h2>
-    </div>
-    <div class="cols">
-      <div class="card-list">
-        <div class="item">
-          <div class="txt">
-            <h3>Fried Pork</h3>
-            <p>Well‑seasoned deep‑fried pork portions.</p>
-            <div class="price">20,000/=</div>
+  <main>
+    <!-- ================= HERO ================= -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" class="w-full h-full object-cover">
+        <div class="absolute inset-0" style="background:linear-gradient(90deg,#0a1512 8%,rgba(10,21,18,.55) 55%,rgba(10,21,18,.3)),linear-gradient(0deg,#0a1512,transparent 45%)"></div>
+      </div>
+      <div class="wrap relative z-[3] w-full">
+        <div class="max-w-[660px] [animation:fade-up_1.2s_ease_both]">
+          <p class="flex items-center gap-3.5 font-display tracking-[4px] text-sm text-gold uppercase mb-[22px]">
+            <span class="w-[50px] h-px bg-gold"></span>Bukoto · Kampala · Uganda
+          </p>
+          <h1 class="font-serif font-medium text-white leading-[.9] text-[clamp(58px,9vw,120px)] mb-2">Taste The <em class="italic text-gold-lt">Difference</em></h1>
+          <p class="font-serif italic text-[22px] text-cream/90 my-5 max-w-[520px] max-[560px]:text-lg">Flame-grilled perfection, island soul and a lounge experience savored to the last bite — right in the heart of Bukoto.</p>
+          <div class="flex flex-wrap gap-4 mt-[34px]">
+            <a href="#menu" class="btn btn-gold">Explore Menu</a>
+            <a href="#reserve" class="btn btn-outline">Reserve A Table</a>
           </div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?auto=format&fit=crop&w=300&q=80" alt="Fried Pork">
         </div>
-        <div class="item">
-          <div class="txt">
-            <h3>Pork Kikalayi</h3>
-            <p>Sautéed pork with vegetables, spices &amp; matooke/irish.</p>
-            <div class="price">25,000/=</div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="block-pad bg-night scroll-mt-20">
+      <div class="wrap grid grid-cols-2 gap-[70px] items-center max-[920px]:grid-cols-1 max-[920px]:gap-[50px]">
+        <div class="relative reveal">
+          <img class="border border-gold/25 shadow-luxe w-full" src="https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Bahamas restaurant interior">
+          <img class="absolute -bottom-10 -right-[30px] w-[55%] border-[5px] border-night shadow-luxe max-[920px]:static max-[920px]:w-full max-[920px]:mt-5 max-[920px]:border-0" src="https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Guests dining at Bahamas">
+        </div>
+        <div class="reveal">
+          <p class="eyebrow"><span class="rule"></span>Our Commitment</p>
+          <h2 class="title">A Premium Taste That Yearns To Be <em>Savored</em></h2>
+          <p class="font-serif italic text-[26px] leading-[1.5] text-cream mt-[26px] mb-[26px]">We are committed to serving wholeheartedly — from our chefs to our waiters, every plate is crafted with rich local flavor and genuine care.</p>
+          <p class="text-sage text-[15.5px] mb-5">We provide valuable experiences you will never forget with friends and partners. Delicious food and refreshing drinks in an atmosphere designed to make you feel happier and more satisfied with every visit.</p>
+          <a href="#menu" class="btn btn-gold mt-3.5">View Our Menus</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MENU ================= -->
+    <section id="menu" class="block-pad scroll-mt-20">
+      <div class="wrap">
+        <div class="text-center reveal">
+          <p class="eyebrow eyebrow-center"><span class="rule"></span>Delight In Every Bite<span class="rule"></span></p>
+          <h2 class="title">Our <em>Signature</em> Menu</h2>
+          <div class="mx-auto mt-[22px] w-[180px] h-5 text-gold" aria-hidden="true">
+            <svg class="w-full h-full" viewBox="0 0 180 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 10 Q40 2 60 10 T118 10 T178 10 M85 10 a5 5 0 1010 0 a5 5 0 10-10 0"/></svg>
           </div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=300&q=80" alt="Pork Kikalayi">
         </div>
-        <div class="item">
-          <div class="txt">
-            <h3>Pork Skewers</h3>
-            <p>Tender flame‑grilled pork skewers (2–3 sticks).</p>
-            <div class="price">15,000/=</div>
+        <div class="flex justify-center gap-2.5 flex-wrap my-11 mt-11 mb-[54px]" role="tablist" aria-label="Menu categories">
+          <button class="tab-chip active" role="tab" aria-selected="true" data-cat="grill">Grill</button>
+          <button class="tab-chip" role="tab" aria-selected="false" data-cat="chicken">Chicken</button>
+          <button class="tab-chip" role="tab" aria-selected="false" data-cat="quick">Quick Meals</button>
+          <button class="tab-chip" role="tab" aria-selected="false" data-cat="drinks">Drinks</button>
+        </div>
+        <div id="menuGrid" class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-[30px] max-[560px]:grid-cols-1" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ================= RESERVATION ================= -->
+    <section id="reserve" class="block-pad bg-deep relative overflow-hidden scroll-mt-20">
+      <div class="wrap grid grid-cols-[1.1fr_1fr] gap-[60px] items-center relative z-[2] max-[920px]:grid-cols-1 max-[920px]:gap-[50px]">
+        <div class="reveal">
+          <p class="eyebrow"><span class="rule"></span>Your Details</p>
+          <h2 class="title mb-[34px]">Reserve A <em>Table</em></h2>
+          <form id="resForm" novalidate>
+            <div class="grid grid-cols-2 gap-5 max-[560px]:grid-cols-1">
+              <div class="mb-[22px]"><label class="field-label" for="rName">Name <span class="req">*</span></label><input class="field-input" id="rName" placeholder="John Doe" autocomplete="name" required></div>
+              <div class="mb-[22px]"><label class="field-label" for="rEmail">Email Address</label><input class="field-input" type="email" id="rEmail" placeholder="email@gmail.com" autocomplete="email"></div>
+            </div>
+            <div class="mb-[22px]"><label class="field-label" for="rPhone">Mobile Number <span class="req">*</span></label><input class="field-input" id="rPhone" placeholder="+256 …" autocomplete="tel" required></div>
+            <div class="grid grid-cols-2 gap-5 max-[560px]:grid-cols-1">
+              <div class="mb-[22px]"><label class="field-label" for="rDate">Date <span class="req">*</span></label><input class="field-input" type="date" id="rDate" required></div>
+              <div class="mb-[22px]"><label class="field-label" for="rTime">Time <span class="req">*</span></label>
+                <select class="field-input" id="rTime" required>
+                  <option value="">Select time</option>
+                  <option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option>
+                  <option>6:00 PM</option><option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-[22px]"><label class="field-label" for="rPax">Number Of Persons <span class="req">*</span></label>
+              <select class="field-input" id="rPax" required>
+                <option value="">Select</option>
+                <option>1 Person</option><option>2 People</option><option>3 People</option>
+                <option>4 People</option><option>5–6 People</option><option>7+ People</option>
+              </select>
+            </div>
+            <button type="submit" id="resSubmit" class="btn btn-gold w-full mt-2">Make A Reservation</button>
+          </form>
+        </div>
+        <div class="relative reveal">
+          <img class="border border-gold/25 shadow-luxe w-full" src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fine dining table at Bahamas">
+          <div class="absolute -bottom-7 -left-7 bg-gold text-deep px-[30px] py-6 text-center shadow-luxe max-[560px]:left-4">
+            <div class="font-display font-bold text-[44px] leading-[.9]">10+</div>
+            <div class="font-display tracking-[2px] uppercase text-[11px] mt-1">Years of Flavor</div>
           </div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=300&q=80" alt="Pork Skewers">
-        </div>
-        <div class="item">
-          <div class="txt">
-            <h3>Pork Chops</h3>
-            <p>Juicy grilled pork chops marinated in herbs.</p>
-            <div class="price">22,000/=</div>
-          </div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1432139509613-5c4255815697?auto=format&fit=crop&w=300&q=80" alt="Pork Chops">
-        </div>
-        <div class="item">
-          <div class="txt">
-            <h3>Pork Ribs</h3>
-            <p>Slow‑grilled marinated pork ribs with BBQ glaze.</p>
-            <div class="price">25,000/=</div>
-          </div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=300&q=80" alt="Pork Ribs">
         </div>
       </div>
+    </section>
 
-      <div class="combo">
-        <h3 class="ct">Combo <small>MEALS</small></h3>
-        <hr>
-        <div class="citem"><h4>Bahamas Pork Combo</h4><p>Fried pork + choice of side &amp; small kachumbali.</p><div class="price">25,000/=</div></div>
-        <div class="citem"><h4>Pork Kikalayi Combo</h4><p>Pork kikalayi + extra side.</p><div class="price">28,000/=</div></div>
-        <div class="citem"><h4>Pork Skewer Combo</h4><p>Pork skewers + chips or wedges.</p><div class="price">18,000/=</div></div>
-        <div class="citem"><h4>Pork Chops Combo</h4><p>Pork chops + choice of side.</p><div class="price">26,000/=</div></div>
-        <div class="citem"><h4>Family Grill Platter</h4><p>Assorted pork, chicken, skewers &amp; mixed sides (Sharing).</p><div class="price">85,000/=</div></div>
+    <!-- ================= EXPERIENCE BANNER ================= -->
+    <section class="relative py-[160px] text-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img src="https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-deep/80"></div>
       </div>
+      <div class="relative z-[2] max-w-[640px] mx-auto px-6 reveal">
+        <p class="eyebrow eyebrow-center"><span class="rule"></span>Any Question?<span class="rule"></span></p>
+        <h2 class="font-serif font-medium text-white leading-[.95] text-[clamp(46px,7vw,84px)] my-[18px] mb-6">Stay Close <em class="italic text-gold-lt">With Us</em></h2>
+        <p class="font-serif italic text-xl text-cream/85 mb-[34px]">Great food, warm hospitality and an unforgettable lounge atmosphere await you.</p>
+        <a href="#contact" class="btn btn-gold">Contact Us</a>
+      </div>
+    </section>
+
+    <!-- ================= GALLERY ================= -->
+    <section class="block-pad bg-night">
+      <div class="wrap">
+        <div class="text-center reveal mb-[50px]">
+          <p class="eyebrow eyebrow-center"><span class="rule"></span>@BahamasKampala<span class="rule"></span></p>
+          <h2 class="title">Moments At <em>Bahamas</em></h2>
+        </div>
+        <div class="grid grid-cols-4 [grid-auto-rows:200px] gap-[14px] max-[920px]:grid-cols-2 reveal">
+          <div class="overflow-hidden relative row-span-2 group"><img class="w-full h-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" src="https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Fresh plated dish"><span class="absolute inset-0 bg-deep/15 transition group-hover:bg-gold/15"></span></div>
+          <div class="overflow-hidden relative group"><img class="w-full h-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Grilled food close-up"><span class="absolute inset-0 bg-deep/15 transition group-hover:bg-gold/15"></span></div>
+          <div class="overflow-hidden relative col-span-2 group"><img class="w-full h-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" src="https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Lounge dining area"><span class="absolute inset-0 bg-deep/15 transition group-hover:bg-gold/15"></span></div>
+          <div class="overflow-hidden relative group"><img class="w-full h-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" src="https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Chef's special plate"><span class="absolute inset-0 bg-deep/15 transition group-hover:bg-gold/15"></span></div>
+          <div class="overflow-hidden relative col-span-2 group"><img class="w-full h-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Evening restaurant ambiance"><span class="absolute inset-0 bg-deep/15 transition group-hover:bg-gold/15"></span></div>
+          <div class="overflow-hidden relative group"><img class="w-full h-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" src="https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Sizzling grill"><span class="absolute inset-0 bg-deep/15 transition group-hover:bg-gold/15"></span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer id="contact" class="bg-deep pt-20 pb-[34px] border-t border-gold/15 scroll-mt-20">
+    <div class="wrap">
+      <div class="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 mb-[50px] max-[920px]:grid-cols-2 max-[560px]:grid-cols-1">
+        <div>
+          <a href="#home" class="inline-block mb-5" aria-label="Bahamas home">
+            <span class="block font-serif text-[34px] font-medium tracking-[1px] leading-[.75] text-white">Bahamas</span>
+            <span class="block font-display text-[9px] tracking-[4px] text-gold mt-1.5">CAFE · RESTAURANT · LOUNGE</span>
+          </a>
+          <p class="text-sage text-sm mb-[18px]">An island-inspired dining experience serving flame-grilled favorites, comfort classics and handcrafted drinks in Bukoto, Kampala.</p>
+        </div>
+        <div>
+          <h4 class="foot-h">Location</h4>
+          <p class="text-sage text-sm">Opposite Bukoto Heights Apartments, Bukoto — Kampala, Uganda</p>
+        </div>
+        <div>
+          <h4 class="foot-h">Contact</h4>
+          <a class="block text-sage text-sm mb-3 transition hover:text-gold-lt" href="tel:+256762831177">+256 762 831 177</a>
+          <a class="block text-sage text-sm mb-3 transition hover:text-gold-lt" href="https://wa.me/256762831177" target="_blank" rel="noopener">WhatsApp Us</a>
+          <a class="block text-sage text-sm transition hover:text-gold-lt" href="mailto:hello@bahamas.ug">hello@bahamas.ug</a>
+        </div>
+        <div>
+          <h4 class="foot-h">Opening Hours</h4>
+          <p class="text-sage text-sm">Monday – Sunday<br>10:00 AM – Late Night</p>
+        </div>
+      </div>
+      <div class="border-t border-gold/15 pt-[26px] text-center text-sage text-[13px]">© <span id="yr"></span> Bahamas Cafe Restaurant Lounge · Crafted with flavor in Kampala.</div>
     </div>
-    <div class="strip">Delivery Orders: <a href="tel:+256762831177">+256 762 831 177</a></div>
+  </footer>
+
+  <!-- ================= CART DRAWER ================= -->
+  <div class="cart-ov" id="cartOv">
+    <aside class="cart-panel" role="dialog" aria-modal="true" aria-label="Your order">
+      <div class="p-[26px] border-b border-gold/15 flex justify-between items-center">
+        <h3 class="font-serif text-[28px] font-semibold text-white">Your Order</h3>
+        <button class="bg-transparent border-0 text-cream text-[28px] leading-none cursor-pointer transition hover:text-gold" data-cart-close aria-label="Close cart">×</button>
+      </div>
+      <div class="flex-1 overflow-y-auto px-[26px] py-3.5" id="cartList"></div>
+      <div class="p-6 border-t border-gold/15">
+        <div class="flex justify-between items-center mb-5">
+          <span class="font-display tracking-[2px] uppercase text-[15px]">Total</span>
+          <span class="font-display text-[30px] text-gold-lt" id="cTotal">UGX 0</span>
+        </div>
+        <input class="cinput" id="oName" placeholder="Your name" autocomplete="name">
+        <input class="cinput" id="oPhone" placeholder="Phone number" autocomplete="tel">
+        <input class="cinput" id="oLoc" placeholder="Delivery location / notes">
+        <button id="checkoutBtn" disabled class="w-full bg-wa text-white border-0 p-4 font-display tracking-[2px] uppercase text-[15px] cursor-pointer flex items-center justify-center gap-2.5 transition enabled:hover:bg-wa-dk disabled:opacity-40 disabled:cursor-not-allowed">
+          <svg class="w-[22px] h-[22px] fill-white" viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.5-.5-.5-.7-.5H7c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.2.2 2.1 3.2 5 4.5 2.9 1.2 2.9.8 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2z"/></svg>
+          Order via WhatsApp
+        </button>
+      </div>
+    </aside>
   </div>
-</section>
 
-<!-- CHICKEN -->
-<section class="sec pattern" id="chicken" style="background:#101010">
-  <div class="wrap">
-    <div class="sec-bar">
-      <div class="mark">B</div>
-      <h2><em>CHICKEN</em> – MENU</h2>
-    </div>
-    <div class="cols">
-      <div class="card-list">
-        <div class="item">
-          <div class="txt"><h3>Quarter Chicken</h3><p>Flame‑grilled quarter chicken.</p><div class="price">18,000/=</div></div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=300&q=80" alt="Quarter Chicken">
-        </div>
-        <div class="item">
-          <div class="txt"><h3>Half Chicken</h3><p>Flame‑grilled half chicken.</p><div class="price">22,000/=</div></div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=300&q=80" alt="Half Chicken">
-        </div>
-        <div class="item">
-          <div class="txt"><h3>Whole Chicken</h3><p>Full flame‑grilled chicken.</p><div class="price">40,000/=</div></div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=300&q=80" alt="Whole Chicken">
-        </div>
-        <div class="item">
-          <div class="txt"><h3>Chicken Kikalayi</h3><p>Fried chicken tossed with cabbage, carrots, garlic &amp; matooke/irish.</p><div class="price">28,000/=</div></div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=300&q=80" alt="Chicken Kikalayi">
-        </div>
-      </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-      <div class="combo">
-        <h3 class="ct">Combo <small>MEALS</small></h3>
-        <hr>
-        <div class="citem"><h4>Quarter Chicken Meal</h4><p>1/4 Chicken + chips or matooke.</p><div class="price">18,000/=</div></div>
-        <div class="citem"><h4>Half Chicken Meal</h4><p>1/2 Chicken + choice of 2 sides.</p><div class="price">28,000/=</div></div>
-        <div class="citem"><h4>Whole Chicken Feast</h4><p>Full chicken + large chips &amp; salad (Serves 3–4).</p><div class="price">55,000/=</div></div>
-        <div class="citem"><h4>Chicken Kikalayi Combo</h4><p>Chicken kikalayi + extra side.</p><div class="price">30,000/=</div></div>
-        <div class="citem"><h4>Chicken Rolex Combo</h4><p>Chicken rolex + side portion of chips.</p><div class="price">15,000/=</div></div>
-      </div>
-    </div>
-    <div class="strip">Delivery Orders: <a href="tel:+256762831177">+256 762 831 177</a></div>
-  </div>
-</section>
-
-<!-- SOUPS -->
-<section class="sec pattern" id="soups">
-  <div class="wrap">
-    <div class="sec-bar">
-      <div class="mark">B</div>
-      <h2><em>SOUPS</em> &amp; QUICK MEALS</h2>
-    </div>
-    <div class="cols">
-      <div class="card-list">
-        <div class="item">
-          <div class="txt"><h3>Pork Soup</h3><p>Rich traditional pork broth with local spices.</p><div class="price">12,000/=</div></div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=300&q=80" alt="Pork Soup">
-        </div>
-        <div class="item">
-          <div class="txt"><h3>Chicken Soup</h3><p>Hearty local chicken broth.</p><div class="price">12,000/=</div></div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=300&q=80" alt="Chicken Soup">
-        </div>
-        <div class="item">
-          <div class="txt"><h3>Chicken Rolex</h3><p>Egg &amp; rolled chapati filled with shredded grilled chicken.</p><div class="price">10,000/=</div></div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=300&q=80" alt="Chicken Rolex">
-        </div>
-        <div class="item">
-          <div class="txt"><h3>Pork Rolex</h3><p>Egg &amp; rolled chapati filled with seasoned fried pork.</p><div class="price">10,000/=</div></div>
-          <img class="thumb" src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=300&q=80" alt="Pork Rolex">
-        </div>
-      </div>
-
-      <div class="combo">
-        <h3 class="ct">Combo <small>MEALS</small></h3>
-        <hr>
-        <div class="citem"><h4>Pork Rolex Combo</h4><p>Pork rolex + side portion of chips.</p><div class="price">15,000/=</div></div>
-        <div class="citem"><h4>Pork Local Meal (Soup)</h4><p>Pork soup served with matooke/posho/cassava.</p><div class="price">15,000/=</div></div>
-        <div class="citem"><h4>Chicken Local Meal (Soup)</h4><p>Chicken soup served with matooke/posho/cassava.</p><div class="price">15,000/=</div></div>
-        <div class="citem"><h4>Pork Ribs Combo</h4><p>Grilled pork ribs + choice of side.</p><div class="price">28,000/=</div></div>
-      </div>
-    </div>
-    <div class="strip">Delivery Orders: <a href="tel:+256762831177">+256 762 831 177</a></div>
-  </div>
-</section>
-
-<!-- INFO -->
-<section class="sec info" id="visit">
-  <div class="wrap">
-    <div class="sec-bar" style="background:#2a2a2a">
-      <div class="mark">B</div>
-      <h2>VISIT <em>US</em></h2>
-    </div>
-    <div class="info-grid">
-      <div class="box">
-        <h4>Location</h4>
-        <p>Opposite Bukoto Heights Apartments,<br>Bukoto — Kampala, Uganda.</p>
-      </div>
-      <div class="box">
-        <h4>Call / Delivery</h4>
-        <p><a href="tel:+256762831177">+256 762 831 177</a><br>
-        <a href="https://wa.me/256762831177" target="_blank" rel="noopener">WhatsApp Order →</a></p>
-      </div>
-      <div class="box">
-        <h4>Opening Hours</h4>
-        <p>Monday – Sunday<br>10:00 AM – Late Night</p>
-      </div>
-      <div class="box">
-        <h4>Also Available</h4>
-        <p>Cafe · Lounge · Sharing Platters<br>Events &amp; Group Bookings</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta">
-  <h2>HUNGRY? WE DELIVER.</h2>
-  <p>Call or WhatsApp us and your order will be on its way.</p>
-  <div class="btns">
-    <a class="btn btn-p" href="tel:+256762831177">Call +256 762 831 177</a>
-    <a class="btn btn-s" href="https://wa.me/256762831177" target="_blank" rel="noopener">WhatsApp Us</a>
-  </div>
-</section>
-
-<footer>
-  <b>Bahamas Cafe, Restaurant &amp; Lounge</b> — Bukoto, Kampala (UG)<br>
-  &copy; <span id="y"></span> All rights reserved. Prices in Uganda Shillings (UGX).
-</footer>
-
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
-  document.querySelectorAll('#menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('menu').classList.remove('open')));
-</script>
+  <script src="js/menu-data.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
